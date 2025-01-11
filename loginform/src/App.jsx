@@ -9,7 +9,7 @@ export default function App() {
   
 
   return (
-    <>
+  
    <BrowserRouter>
    <Routes>
     <Route exact path='/' element={<Register/>}/>
@@ -17,7 +17,7 @@ export default function App() {
     <Route exact path='/forgotpassword' element={<ForgetPassword/>}/>
    </Routes>
    </BrowserRouter>
-    </>
+   
   )
 }
 

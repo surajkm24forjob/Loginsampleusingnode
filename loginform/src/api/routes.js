@@ -6,12 +6,18 @@ const bcrypt = require('bcrypt')
 
 // User registration API
 router.post('/register',async (req, res) => {
+
+          
         try {
            const {username, email,password} = req.body;
+          if (username&&email&&password==='') {
+            alert("Please Enter valid details first")
+          }
+          
            const Hashpassword = await bcrypt.hash(password, 10) 
            const user  = new User({username,email,password : Hashpassword})
            await user.save();
-           
+           alert("")
             res.send({message:"User registered successfully"})
         } catch (error) {
             res.status(500).send({message:"User Registration Failed try again later"});
@@ -41,37 +47,53 @@ router.post('/login',async (req, res) => {
         }
 });
 
-function authenticateToken(req, res, next) {
-    const token = req.header('Authorization').replace('Bearer ', '');
+// function authenticateToken(req, res, next) {
+//     console.log("Authorization header:" , req.header('Authorisation'))
+//     const token = req.header('Authorization')?.replace('Bearer ', '');
   
-    if (!token) {
-      return res.status(401).send({ message: 'Access denied. No token provided.' });
-    }
+//     if (!token) {
+//       return res.status(400).send({ message: 'Access denied. No token provided.' });
+//     }
   
-    try {
-      const decoded = jwt.verify(token, process.env.SECRET_KEY);
-      req.user = decoded;
-      next();
-    } catch (error) {
-      return res.status(400).send({ message: 'Invalid token.' });
-    }
-  }
+//     try {
+//       const decoded = jwt.verify(token, process.env.SECRET_KEY);
+//       console.log("Decoded token:", decoded);
+//       req.user = decoded;
+//       next();
+//     } catch (error) {
+//         console.error("Error in authenticateToken:", error); // Add this line
+       
+//       return res.status(400).send({ message: 'Invalid token.' });
+//     }
+//   }
   
 // Forget user password API
-router.post('/forget-password',authenticateToken, async(req, res) => {
-            try {
-                const {username, password,cnfPassword}= req.body;
+router.post('/forget-password', async(req, res) => {
+    try {
+                console.log("Request Body", req.body);
+                const {username, password, PASSNEW}= req.body;
+                
+                console.log("Finding user...", username);
+                const user = await User.findOne({username})
 
-                const user = await User.findOne({username});
-                console.log(user);
+                
+                console.log("User found: ",user);
+                
+                
+                
+                
                 if(!user){
-                    return res.status(401).send({message:"Invalid username or password"})
+                    console.log("User not found: " , username);
+                    return res.status(400).send({message:"Invalid username or password"})
                 }
-                if(password !== cnfPassword){
-                return res.status(401).send({message:"Password and Confirm Password does not match"})
-                }else{
-                    const Hashpassword = await bcrypt.hash(password, 10);
+                console.log("Checking passwords..." , password, PASSNEW);
+                
+                if(password !== req.body.PASSNEW){
+                console.log("Passwords do not match");
+                    return res.status(400).send({message:"Password and Confirm Password does not match"})
                 }
+
+                const Hashpassword = await bcrypt.hash(password, 10);
                 user.password = Hashpassword;
                 await user.save();
                 res.send({message:"Password Updated Successfully"});

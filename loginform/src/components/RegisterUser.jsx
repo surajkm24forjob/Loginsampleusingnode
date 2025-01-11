@@ -12,6 +12,14 @@ const Register = () => {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
+        
+        if(!username || !email || !password) {
+                alert("Please fill all the fields")
+                setError('Please fill all the fields');
+                return;
+            }
+
+
         try {
             const response = await axios.post('http://localhost:8080/api/register', {
                 username,
@@ -22,45 +30,47 @@ const Register = () => {
             setUsername('');
             setEmail('');
             setPassword('');
+            localStorage.setItem('forgotPasswordUsername' ,username);
             history('/login');
         } catch (err) {
             setError(err);
         }
     };
 
-const handleRegisterUser = ()=>{
-    localStorage.setItem('forgotPasswordUsername' ,username);
-       history('/login');
-}
+
 
     return (
-        <div className='registeruser '>
-            <h5>Register</h5>
-            <form onSubmit={handleSubmit} className='form-sm mx-auto w-25'>
+        <div className='registeruser'>
+     
+      <h5>Register Here!</h5>
+            <form onSubmit={handleSubmit} className='form formdisplay mx-auto m-4 p-4 w-100 border rounded-3 '>
+              
                 <div className="mb-3">
-                <label >Username</label>
+                <label className='form-label' >Username</label>
                 </div>
                 <div className="mb-3">
                 <input type="text" className='form-control' value={username} onChange={(event) => setUsername(event.target.value)}/>
                 </div>
                 <div className="mb-3">
-                <label>Email</label>
+                <label className='form-label'>Email</label >
                 </div>
                <div className="mb-3">
                <input className='form-control' type="email" value={email} onChange={(event) => setEmail(event.target.value)}/>
                </div>
                 <div className="mb-3">
-                <label>Password </label>
+                <label className='form-label'>Password </label >
                 </div>
                 <div className="mb-3">
-                <input className='form-control' type="password" value={password} onChange={(event) => setPassword(event.target.value)}/>
+                <input className='form-control' type="password" value={password} onChange={(event) => setPassword(event.target.value)} />
                 
                 </div>
                 
-                <button className='btn btn-success' type="submit" onClick={handleRegisterUser}>Register</button>
-                {error && <p style={{ color: 'red' }}>{error}</p>}
+                <button className='btn btn-success d-flex mx-auto' type="submit">Register</button>
+                {error && <p style={{ color: 'red' }}>{error}</p>} 
             </form>
-        </div>
+        
+      </div>
+     
     );
 };
 

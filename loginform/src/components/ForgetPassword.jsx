@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router-dom';
 
 const ForgetPassword = () => {
     const [password, setPassword] = useState('');
-    const [cnfpassword, setcnfPassword] = useState('');
+    const [cnfpassword, setCnfPassword] = useState('');
     const [error, setError] = useState(null);
     const [username, setUsername] = useState('');
     const navigate = useNavigate();
@@ -29,38 +29,41 @@ const ForgetPassword = () => {
     const handleSubmit = async (event) => {
         event.preventDefault();
        
-      
+        if(!password || !cnfpassword) {
+            alert("Please fill all the fields")
+            setError('Please fill all the fields');
+            return;
+        }
 
         if (password!==cnfpassword) {
             setError('Passwords do not match');
             return;
         }
         try {
-            await axios.post('http://localhost:8080/api/forget-password', {
+            const response = await axios.post('http://localhost:8080/api/forget-password', {
                 username,
                 password,
-                cnfpassword,
+                PASSNEW : cnfpassword,
                 
             },{
                headers:{
                 Authorization: `Bearer ${localStorage.getItem('token')}`
                } 
-            }).then(console.log(username,password,cnfpassword))
-            .then((response)=>{
-                if (response.data.message ==="Password Updated Successfully") {
+            }).then(console.log(`Password & Confirm Password ${username} is `, password , cnfpassword))
+         
+         if (response.data.message ==="Password Updated Successfully") {
                     setSuccess('Password Updated Successfully!');
                     setError(null);
                     setPassword('');
-                    setcnfPassword('');
+                    setCnfPassword('');
                     localStorage.removeItem('forgotPasswordUsername');
+                    alert("Password changed successfully! Login again")
                     setTimeout(()=>navigate('/login'),2000);
                    } else {
                     setError(response.data.message);
                    } 
-            })
-            .catch((error)=>{
-                setError(error.message);
-            });
+            
+           
          
         } catch (error) {
             setError(error.message);
@@ -68,25 +71,32 @@ const ForgetPassword = () => {
     };
 
     return (
-        <div>
-            <h1>Forget Password</h1>
-            <form onSubmit={handleSubmit}>
-                <label>
-                    create New Password:
-                  
-                </label>
+        <div className='forgetuser'>
+            <h5>Forget Password</h5>
+            <form onSubmit={handleSubmit} className='form formdisplay mx-auto m-4 p-4 w-100 border rounded-3 '>
+                <div className="mb-3">
+                <label className='form-label' >create New Password</label>
+                </div>
+                <div className="mb-3">
                 <input
                         type="password"
                         value={password}
                         onChange={(event) => setPassword(event.target.value)}
+                        className='form-control'
                     />
-                <br />
-                <label htmlFor="">confirm Password</label>
-                <input type="password" name="cnfpassword" id="cnfpassword" value={cnfpassword} onChange={(event)=>setcnfPassword(event.target.value)}/>
-                <button type="submit">Reset Password</button>
+                </div>
+                <div className="mb-3">
+                <label htmlFor="" className='form-label' >confirm Password</label>
+                </div>
+                <div className="mb-3">
+                <input type="password" name="cnfpassword" id="cnfpassword" value={cnfpassword} onChange={(event)=>setCnfPassword(event.target.value)} className='form-control'/>
+                </div>
+                <button className='btn btn-success d-flex mx-auto' type="submit">Reset Password</button>
+                <div className='divforforgetpass mt-3'>
                 {error && <p style={{ color: 'red' }}>{error}</p>}
                 {success && <p style={{ color: 'green' }}>{success}</p>}
-            </form>
+                </div>
+                   </form>
         </div>
     );
 };

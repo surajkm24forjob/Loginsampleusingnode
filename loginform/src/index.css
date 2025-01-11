@@ -1,19 +1,109 @@
 body,html{
-   
+   height: 100vh;
+   margin: 0;
+   padding: 0;
 }
 
 .registeruser{
-    display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-       
+    display: flex;   
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    left:50rem;
+    top: 18%;
+    width: 30%;
+
+
 }   
 
+.formdisplay{
+    box-shadow: 0px 0px 10px 10px lightblue;
+}
 
 .loginuser{
+    display: flex;   
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    left:30rem;
+    top: 18%;
+    width: 30%;
+
+
+}
+
+.divforforgetpass{
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
 }
+
+.forgetuser{
+    display: flex;   
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    left:30rem;
+    top: 18%;
+    width: 30%;
+}
+
+
+@media (min-width:1200px){
+    .registeruser{
+        left:40rem;
+        top: 18%;
+        width: 30%;
+    }
+    .forgetuser{
+        left:30rem;
+        top: 18%;
+        width: 30%;
+    }
+    .loginuser{
+        left:30rem;
+        top: 18%;
+        width: 30%;
+    }
+}
+
+@media (min-width:750px){
+    .registeruser{
+        left:13rem;
+        top: 18%;
+        width: 50%;
+    }
+    .forgetuser{
+        left:13rem;
+        top: 18%;
+        width: 50%;
+    }
+    .loginuser{
+        left:13rem;
+        top: 18%;
+        width: 50%;
+    }
+}
+
+@media (min-width:550px){
+    .registeruser{
+        left:10rem;
+        top: 18%;
+        width: 50%;
+    }
+    .forgetuser{
+        left:10rem;
+        top: 18%;
+        width: 50%;
+    }
+    .loginuser{
+        left:10rem;
+        top: 18%;
+        width: 50%;
+    }
+}
+
