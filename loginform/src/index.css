@@ -10,7 +10,7 @@ body,html{
     justify-content: center;
     align-items: center;
     position: absolute;
-    left:50rem;
+    left:30rem;
     top: 18%;
     width: 30%;
 
@@ -52,7 +52,7 @@ body,html{
     width: 30%;
 }
 
-
+/* 
 @media (min-width:1200px){
     .registeruser{
         left:40rem;
@@ -105,5 +105,5 @@ body,html{
         top: 18%;
         width: 50%;
     }
-}
+} */
 

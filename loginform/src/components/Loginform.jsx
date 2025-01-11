@@ -7,7 +7,9 @@ const Loginform = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState(null);
+    const [success, setsuccess] = useState(null);
     const navigate = useNavigate();
+
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -28,6 +30,7 @@ const Loginform = () => {
 
         if (response.data.message ==='Login Successfull') {
             console.log('Login Successfull');
+            setsuccess('Login Successfull')
         }else{
             setError(response.data.message);;
         }
@@ -65,8 +68,11 @@ const Loginform = () => {
                 <button  className='btn btn-success d-flex mx-auto' type="submit">Login</button>
               <div className='divforforgetpass mt-3'>
               <h6 >Forgot Password <a href="" onClick={handleforgetpassword} > click here!</a></h6>
+                       
+                       
+                        {success && <p style={{ color: 'green' }}>{success}</p>}
                 {error && <p style={{ color: 'red' }}>{error}</p>}
-          
+                        
               </div>
             </form>
         </div>

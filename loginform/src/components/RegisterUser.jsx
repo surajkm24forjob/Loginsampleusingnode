@@ -30,14 +30,16 @@ const Register = () => {
             setUsername('');
             setEmail('');
             setPassword('');
-            localStorage.setItem('forgotPasswordUsername' ,username);
             history('/login');
         } catch (err) {
             setError(err);
         }
     };
 
-
+const handleRegisterUser = ()=>{
+    localStorage.setItem('forgotPasswordUsername' ,username);
+       history('/login');
+}
 
     return (
         <div className='registeruser'>
@@ -65,8 +67,8 @@ const Register = () => {
                 
                 </div>
                 
-                <button className='btn btn-success d-flex mx-auto' type="submit">Register</button>
-                {error && <p style={{ color: 'red' }}>{error}</p>} 
+                <button className='btn btn-success d-flex mx-auto' type="submit" onClick={handleRegisterUser}>Register</button>
+                {error && <p style={{ color: 'red' }}>{error}</p>}
             </form>
         
       </div>
