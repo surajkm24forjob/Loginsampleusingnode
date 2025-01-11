@@ -30,7 +30,9 @@ const Register = () => {
             setUsername('');
             setEmail('');
             setPassword('');
+            handleRegisterUser();
             history('/login');
+
         } catch (err) {
             setError(err);
         }
@@ -67,7 +69,7 @@ const handleRegisterUser = ()=>{
                 
                 </div>
                 
-                <button className='btn btn-success d-flex mx-auto' type="submit" onClick={handleRegisterUser}>Register</button>
+                <button className='btn btn-success d-flex mx-auto' type="submit">Register</button>
                 {error && <p style={{ color: 'red' }}>{error}</p>}
             </form>
         
