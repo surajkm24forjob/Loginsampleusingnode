@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 
 
 
-
+const apiBaseUrl = import.meta.env.VITE_API_BASE_URL;
 const ForgetPassword = () => {
     const [password, setPassword] = useState('');
     const [cnfpassword, setCnfPassword] = useState('');
@@ -40,7 +40,7 @@ const ForgetPassword = () => {
             return;
         }
         try {
-            const response = await axios.post('http://localhost:8080/api/forget-password', {
+            const response = await axios.post(`${apiBaseUrl}/forget-password`, {
                 username,
                 password,
                 PASSNEW : cnfpassword,
